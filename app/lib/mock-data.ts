@@ -1,5 +1,5 @@
 // ============================================================
-// GoalScope — Mock Data for Development
+// Jakampus Soccer — Mock Data for Development
 // ============================================================
 import type {
   Country,

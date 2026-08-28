@@ -28,8 +28,8 @@ export default function Navbar() {
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 group">
           <span className="text-2xl">⚽</span>
-          <span className="text-xl font-bold bg-gradient-to-r from-[#10b981] to-[#3b82f6] bg-clip-text text-transparent">
-            Jakampus
+          <span className="text-xl font-bold bg-gradient-to-r from-[#ef4444] via-[#f97316] to-[#f59e0b] bg-clip-text text-transparent">
+            Jakampus Soccer
           </span>
         </Link>
 

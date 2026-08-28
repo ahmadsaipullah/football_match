@@ -148,11 +148,11 @@ export default async function Home(props: PageProps<"/">) {
     <div className="max-w-7xl mx-auto px-4 py-4">
       <AutoRefresh intervalMs={60000} />
       {/* Hero */}
-      <div className="mb-6 p-6 rounded-2xl bg-gradient-to-r from-[#10b981]/10 via-[#3b82f6]/10 to-[#8b5cf6]/10 border border-[#1e2433]">
+      <div className="mb-6 p-6 rounded-2xl bg-gradient-to-r from-[#ef4444]/10 via-[#f97316]/10 to-[#f59e0b]/10 border border-[#ef4444]/20">
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold mb-1">
-              <span className="bg-gradient-to-r from-[#10b981] to-[#3b82f6] bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#ef4444] via-[#f97316] to-[#f59e0b] bg-clip-text text-transparent">
                 Live Football Scores
               </span>
             </h1>

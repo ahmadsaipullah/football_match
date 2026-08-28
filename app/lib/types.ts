@@ -1,5 +1,5 @@
 // ============================================================
-// GoalScope — TypeScript Type Definitions
+// Jakampus Soccer — TypeScript Type Definitions
 // ============================================================
 
 export interface Country {
