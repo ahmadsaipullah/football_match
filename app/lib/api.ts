@@ -67,8 +67,14 @@ async function fetchFootball<T>(
 // ── Public API functions ─────────────────────────────────────
 
 export async function getCountries(): Promise<Country[]> {
-  if (USE_MOCK) return mockCountries;
-  return fetchFootball<Country[]>("countries");
+  const getMock = () => mockCountries;
+  if (USE_MOCK) return getMock();
+  try {
+    return await fetchFootball<Country[]>("countries");
+  } catch (error) {
+    console.warn("API Error, falling back to mock countries");
+    return getMock();
+  }
 }
 
 export async function getLeagues(params?: {
@@ -76,19 +82,28 @@ export async function getLeagues(params?: {
   id?: string;
   season?: string;
 }): Promise<League[]> {
-  if (USE_MOCK) {
+  const getMock = () => {
     if (params?.country) return getMockLeaguesByCountry(params.country);
     if (params?.id) {
       const league = mockLeagues.find((l) => l.id === Number(params.id));
       return league ? [league] : [];
     }
     return mockLeagues;
-  }
+  };
+  
+  if (USE_MOCK) return getMock();
+
   const apiParams: Record<string, string> = {};
   if (params?.country) apiParams.country = params.country;
   if (params?.id) apiParams.id = params.id;
   if (params?.season) apiParams.season = params.season;
-  return fetchFootball<League[]>("leagues", apiParams);
+  
+  try {
+    return await fetchFootball<League[]>("leagues", apiParams);
+  } catch (error) {
+    console.warn("API Error, falling back to mock leagues");
+    return getMock();
+  }
 }
 
 export async function getFixtures(params?: {
@@ -98,7 +113,7 @@ export async function getFixtures(params?: {
   live?: string;
   id?: string;
 }): Promise<Fixture[]> {
-  if (USE_MOCK) {
+  const getMock = () => {
     if (params?.id) {
       const fixture = getMockFixtureById(Number(params.id));
       return fixture ? [fixture] : [];
@@ -110,76 +125,112 @@ export async function getFixtures(params?: {
       );
     }
     return mockFixtures;
-  }
+  };
+
+  if (USE_MOCK) return getMock();
+
   const apiParams: Record<string, string> = {};
   if (params?.date) apiParams.date = params.date;
   if (params?.league) apiParams.league = params.league;
   if (params?.season) apiParams.season = params.season;
   if (params?.live) apiParams.live = params.live;
   if (params?.id) apiParams.id = params.id;
-  return fetchFootball<Fixture[]>("fixtures", apiParams);
+  
+  try {
+    return await fetchFootball<Fixture[]>("fixtures", apiParams);
+  } catch (error) {
+    console.warn("API Error, falling back to mock fixtures");
+    return getMock();
+  }
 }
 
 export async function getStandings(
   league: string,
   season: string
 ): Promise<Standing[]> {
-  if (USE_MOCK) {
-    if (league === "39") return mockStandings39;
-    // Return generic standings for other leagues
-    return mockStandings39;
+  const getMock = () => mockStandings39;
+
+  if (USE_MOCK) return getMock();
+
+  try {
+    const data = await fetchFootball<
+      Array<{ league: { standings: Standing[][] } }>
+    >("standings", { league, season });
+    return data?.[0]?.league?.standings?.[0] || [];
+  } catch (error) {
+    console.warn("API Error, falling back to mock standings");
+    return getMock();
   }
-  const data = await fetchFootball<
-    Array<{ league: { standings: Standing[][] } }>
-  >("standings", { league, season });
-  return data?.[0]?.league?.standings?.[0] || [];
 }
 
 export async function getTopScorers(
   league: string,
   season: string
 ): Promise<PlayerStatistics[]> {
-  if (USE_MOCK) return mockTopScorers39;
-  return fetchFootball<PlayerStatistics[]>("players/topscorers", {
-    league,
-    season,
-  });
+  const getMock = () => mockTopScorers39;
+
+  if (USE_MOCK) return getMock();
+
+  try {
+    return await fetchFootball<PlayerStatistics[]>("players/topscorers", {
+      league,
+      season,
+    });
+  } catch (error) {
+    console.warn("API Error, falling back to mock top scorers");
+    return getMock();
+  }
 }
 
 export async function getFixtureEvents(
   fixtureId: string
 ): Promise<FixtureEvent[]> {
-  if (USE_MOCK) {
-    if (fixtureId === "1001") return mockEvents1001;
-    return [];
+  const getMock = () => (fixtureId === "1001" ? mockEvents1001 : []);
+
+  if (USE_MOCK) return getMock();
+
+  try {
+    return await fetchFootball<FixtureEvent[]>("fixtures/events", {
+      fixture: fixtureId,
+    });
+  } catch (error) {
+    console.warn("API Error, falling back to mock events");
+    return getMock();
   }
-  return fetchFootball<FixtureEvent[]>("fixtures/events", {
-    fixture: fixtureId,
-  });
 }
 
 export async function getFixtureStatistics(
   fixtureId: string
 ): Promise<FixtureTeamStatistic[]> {
-  if (USE_MOCK) {
-    if (fixtureId === "1001") return mockStatistics1001;
-    return [];
+  const getMock = () => (fixtureId === "1001" ? mockStatistics1001 : []);
+
+  if (USE_MOCK) return getMock();
+
+  try {
+    return await fetchFootball<FixtureTeamStatistic[]>("fixtures/statistics", {
+      fixture: fixtureId,
+    });
+  } catch (error) {
+    console.warn("API Error, falling back to mock statistics");
+    return getMock();
   }
-  return fetchFootball<FixtureTeamStatistic[]>("fixtures/statistics", {
-    fixture: fixtureId,
-  });
 }
 
 export async function getFixtureLineups(
   fixtureId: string
 ): Promise<MatchLineup[]> {
-  if (USE_MOCK) {
-    if (fixtureId === "1001") return mockLineups1001;
-    return [];
+  const getMock = () => (fixtureId === "1001" ? mockLineups1001 : []);
+
+  if (USE_MOCK) return getMock();
+
+  try {
+    return await fetchFootball<MatchLineup[]>("fixtures/lineups", {
+      fixture: fixtureId,
+    });
+  } catch (error) {
+    console.warn("API Error, falling back to mock lineups");
+    return getMock();
   }
-  return fetchFootball<MatchLineup[]>("fixtures/lineups", {
-    fixture: fixtureId,
-  });
 }
 
 export async function getStreams(matchId?: number): Promise<LiveStream[]> {
