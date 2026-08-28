@@ -29,7 +29,7 @@ export default function Navbar() {
         <Link href="/" className="flex items-center gap-2 group">
           <span className="text-2xl">⚽</span>
           <span className="text-xl font-bold bg-gradient-to-r from-[#10b981] to-[#3b82f6] bg-clip-text text-transparent">
-            GoalScope
+            Jakampus
           </span>
         </Link>
 
@@ -45,11 +45,10 @@ export default function Navbar() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                  isActive
-                    ? "bg-[#10b981]/10 text-[#10b981]"
-                    : "text-[#94a3b8] hover:text-[#f1f5f9] hover:bg-white/5"
-                }`}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${isActive
+                  ? "bg-[#10b981]/10 text-[#10b981]"
+                  : "text-[#94a3b8] hover:text-[#f1f5f9] hover:bg-white/5"
+                  }`}
               >
                 <Icon size={16} />
                 {item.label}
@@ -91,11 +90,10 @@ export default function Navbar() {
                   key={item.href}
                   href={item.href}
                   onClick={() => setMobileOpen(false)}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all ${
-                    isActive
-                      ? "bg-[#10b981]/10 text-[#10b981]"
-                      : "text-[#94a3b8] hover:text-[#f1f5f9] hover:bg-white/5"
-                  }`}
+                  className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all ${isActive
+                    ? "bg-[#10b981]/10 text-[#10b981]"
+                    : "text-[#94a3b8] hover:text-[#f1f5f9] hover:bg-white/5"
+                    }`}
                 >
                   <Icon size={18} />
                   {item.label}
