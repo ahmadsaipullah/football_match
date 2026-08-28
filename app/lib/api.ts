@@ -54,7 +54,14 @@ async function fetchFootball<T>(
   }
 
   const data = await res.json();
-  return data.response as T;
+  
+  // API-Football returns 200 OK even when there are API errors (like rate limits)
+  if (data.errors && Object.keys(data.errors).length > 0) {
+    console.error("API-Football Error:", data.errors);
+    throw new Error(`API-Football Error: ${JSON.stringify(data.errors)}`);
+  }
+
+  return (data.response || []) as T;
 }
 
 // ── Public API functions ─────────────────────────────────────
