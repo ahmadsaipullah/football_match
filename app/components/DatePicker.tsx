@@ -34,7 +34,7 @@ export default function DatePicker() {
     format(date, "yyyy-MM-dd") === format(currentDate, "yyyy-MM-dd");
 
   return (
-    <div className="flex items-center gap-1 overflow-x-auto pb-1 no-scrollbar">
+    <div className="flex items-center gap-1 overflow-x-auto pb-1 no-scrollbar w-full sm:w-auto max-w-full">
       <button
         onClick={() => goToDate(subDays(currentDate, 1))}
         className="p-1.5 rounded-lg text-[#94a3b8] hover:text-white hover:bg-white/5 transition shrink-0"
@@ -43,7 +43,7 @@ export default function DatePicker() {
         <ChevronLeft size={16} />
       </button>
 
-      <div className="flex items-center gap-1">
+      <div className="flex items-center gap-1 shrink-0">
         {dates.map((date) => (
           <button
             key={date.toISOString()}
