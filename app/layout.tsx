@@ -12,8 +12,20 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Jakampus Soccer — Live Football Scores & Streaming",
   description:
-    "Live football scores, fixtures, standings, and streaming from 1,200+ leagues worldwide. Your ultimate football companion.",
-  keywords: ["football", "soccer", "live scores", "fixtures", "standings", "streaming"],
+    "Live football scores, fixtures, standings, dan tayangan streaming dari 1,200+ liga di seluruh dunia. Pantau skor bola real-time terlengkap di sini!",
+  keywords: ["football", "soccer", "live scores", "fixtures", "standings", "streaming", "sepak bola", "skor langsung", "jakampus"],
+  openGraph: {
+    title: "Jakampus Soccer ⚽ Live Score & Streaming",
+    description: "Pantau skor sepak bola real-time, jadwal, klasemen, dan live streaming dari 1,200+ liga di seluruh dunia. Selalu update!",
+    siteName: "Jakampus Soccer",
+    locale: "id_ID",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Jakampus Soccer ⚽ Live Score & Streaming",
+    description: "Pantau skor sepak bola real-time, jadwal, klasemen, dan live streaming dari 1,200+ liga di seluruh dunia.",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
